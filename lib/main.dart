@@ -3,28 +3,33 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MyApp());
 }
-
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  String _displayText = "Click The Button";
+  void _changeText(){
+    setState(() {
+      _displayText = "Button pressed";
+    });
+  }
+  @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("The Tracker App"),
-          backgroundColor: const Color.fromARGB(255, 255, 77, 77),
-        ),
         body: Center(
-          child: Text(
-            "Hello World!",
-            style: TextStyle(
-              fontFamily: "Raleway",
-              fontSize: 40,
-              color: const Color.fromARGB(255, 15, 15, 14),
-            ),
+          child: Column(
+            children: [
+              Text(
+                _displayText,
+                style: TextStyle(fontSize: 30),
+              ),
+              ElevatedButton(onPressed: _changeText, child: Text("Press")),
+            ],
           ),
         ),
       ),
