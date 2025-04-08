@@ -1,96 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 void main() {
-  runApp(const StyledTextApp());
+  runApp(MyApp());
 }
 
-class StyledTextApp extends StatelessWidget {
-  const StyledTextApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: const TextStyleScreen(),
-    );
+    return MaterialApp(debugShowCheckedModeBanner: false, home: HomePage());
   }
 }
 
-class TextStyleScreen extends StatelessWidget {
-  const TextStyleScreen({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final List<String> imageLinks = [
+    "https://iro.umy.ac.id/wp-content/uploads/2022/09/daffodil-international-university-logo-300x300.png",
+    "https://i.ytimg.com/vi/FkLZ3xs-V5w/maxresdefault.jpg",
+    "https://www.eduopinions.com/wp-content/uploads/2018/02/Daffodil-International-University-DIU-logo.png",
+    "https://i.ytimg.com/vi/S_quwX1MDUE/maxresdefault.jpg",
+    "https://daffodilvarsity.edu.bd/photos/shares/diu-trans.jpg",
+    "https://i.ytimg.com/vi/S7LTG_D5E_E/maxresdefault.jpg",
+    "https://4.bp.blogspot.com/-WhcTkhbrc7E/Vzt22ZjsoZI/AAAAAAAAAQA/h7RO8lRygdcTFJm1DgixaHG7pyDgZppYACLcB/s1600/daffodil%2Binternational%2Buniversity.jpg",
+    "https://parents.daffodilvarsity.edu.bd/storage/20/6208ba6f577a8_offices.jpg",
+    "https://i.ytimg.com/vi/aFActm0d0DE/maxresdefault.jpg",
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
-        title: const Text("The Tracker App"),
-        backgroundColor: const Color.fromARGB(255, 255, 77, 77),
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.deepPurpleAccent,
+        title: Center(
+          child: Text(
+            "The Tracker App",
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+        ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/diu1.jpg'),
-          Text(
-            'This is 1st page',
-            style: GoogleFonts.lato(
-              textStyle: const TextStyle(
-                fontSize: 25,
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: GridView.builder(
+          itemCount: imageLinks.length,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          itemBuilder: (context, index) {
+            return Container(
+              //height: 400,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                image: DecorationImage(
+                  image: NetworkImage(imageLinks[index]),
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const SecondScreen()),
-              );
-            },
-            child: const Text('Click here to go - 2nd page'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class SecondScreen extends StatelessWidget {
-  const SecondScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text("The Tracker App"),
-        backgroundColor: const Color.fromARGB(255, 255, 77, 77),
-      ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/diu2.jpg'),
-          Text(
-            'This is 2nd page',
-            style: GoogleFonts.lato(
-              textStyle: const TextStyle(
-                fontSize: 25,
-                color: Colors.red,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            child: const Text('Click here to go 1st page'),
-          ),
-        ],
+            );
+          },
+        ),
       ),
     );
   }
