@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-void main() {
+main() {
   runApp(MyApp());
 }
 
@@ -9,65 +9,129 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(debugShowCheckedModeBanner: false, home: HomePage());
+    return MaterialApp(home: HomeScreen(), debugShowCheckedModeBanner: false);
   }
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
 
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  final List<String> imageLinks = [
-    "https://iro.umy.ac.id/wp-content/uploads/2022/09/daffodil-international-university-logo-300x300.png",
-    "https://i.ytimg.com/vi/FkLZ3xs-V5w/maxresdefault.jpg",
-    "https://www.eduopinions.com/wp-content/uploads/2018/02/Daffodil-International-University-DIU-logo.png",
-    "https://i.ytimg.com/vi/S_quwX1MDUE/maxresdefault.jpg",
-    "https://daffodilvarsity.edu.bd/photos/shares/diu-trans.jpg",
-    "https://i.ytimg.com/vi/S7LTG_D5E_E/maxresdefault.jpg",
-    "https://4.bp.blogspot.com/-WhcTkhbrc7E/Vzt22ZjsoZI/AAAAAAAAAQA/h7RO8lRygdcTFJm1DgixaHG7pyDgZppYACLcB/s1600/daffodil%2Binternational%2Buniversity.jpg",
-    "https://parents.daffodilvarsity.edu.bd/storage/20/6208ba6f577a8_offices.jpg",
-    "https://i.ytimg.com/vi/aFActm0d0DE/maxresdefault.jpg",
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.deepPurpleAccent,
-        title: Center(
-          child: Text(
-            "The Tracker App",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-        ),
+        title: Text("The Tracker App"),
+        backgroundColor: const Color.fromARGB(255, 249, 3, 3),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: GridView.builder(
-          itemCount: imageLinks.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
+      drawer: NaviDrawer(),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(child: Image.asset("assets/images/diu1.jpg")),
+          Text(
+            "App HomeScreen.",
+            style: TextStyle(
+              fontSize: 40,
+              color: const Color.fromARGB(255, 0, 52, 12),
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          itemBuilder: (context, index) {
-            return Container(
-              //height: 400,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                image: DecorationImage(
-                  image: NetworkImage(imageLinks[index]),
-                  fit: BoxFit.cover,
-                ),
-              ),
-            );
-          },
-        ),
+        ],
+      ),
+    );
+  }
+}
+
+class NaviDrawer extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            child: Column(children: [Icon(Icons.home), Text("Home")]),
+          ),
+          ListTile(
+            leading: Icon(Icons.home),
+            title: Text("Home"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.settings),
+            title: Text("Settings"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.info),
+            title: Text("About Us"),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutUsScreen()),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SettingsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Settings")),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset("assets/images/settings.jpg"),
+          Text(
+            "App Setting.",
+            style: TextStyle(
+              fontSize: 40,
+              color: const Color.fromARGB(255, 0, 52, 12),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class AboutUsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("About Us")),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset("assets/images/diu2.jpg"),
+          Text(
+            "App About Page",
+            style: TextStyle(
+              fontSize: 40,
+              color: const Color.fromARGB(255, 0, 52, 12),
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ],
       ),
     );
   }
