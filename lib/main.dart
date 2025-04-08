@@ -1,90 +1,58 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Tracker App',
       debugShowCheckedModeBanner: false,
-      title: 'Task 10',
-      home: BottomNavScreen(),
-    );
-  }
-}
-
-class BottomNavScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(title: Text('The Tracker App - Task 10')),
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(), // Prevents swipe navigation
-          children: [HomeScreen(), SearchScreen(), ProfileScreen()],
-        ),
-        bottomNavigationBar: TabBar(
-          labelColor: Colors.blue,
-          unselectedLabelColor: Colors.grey,
-          indicatorColor: Colors.transparent, // Removes indicator animation
-          tabs: [
-            Tab(icon: Icon(Icons.home), text: 'Home'),
-            Tab(icon: Icon(Icons.search), text: 'Search'),
-            Tab(icon: Icon(Icons.person), text: 'Profile'),
-          ],
+      home: Scaffold(
+        appBar: AppBar(title: Text('Tracker App - Custom Container'),backgroundColor: Color.fromARGB(255, 242, 255, 2)),
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
+        body: const Center(
+          child: CustomContainer(),
         ),
       ),
     );
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class CustomContainer extends StatelessWidget {
+  const CustomContainer({super.key});
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/diu1.jpg', width: 500, height: 300),
-          SizedBox(height: 10),
-          Text('Welcome to Home Screen', style: TextStyle(fontSize: 18)),
+    return Container(
+      width: 250,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color:Colors.blue,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow:[ BoxShadow(
+          color: Colors.black.withOpacity(0.3),
+          blurRadius: 10,
+          spreadRadius: 2,
+          offset: Offset(5,5),
+          
+        
+        ),
         ],
       ),
-    );
-  }
-}
-
-class SearchScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/diu2.jpg', width: 500, height: 400),
-          SizedBox(height: 10),
-          Text('Search for anything!', style: TextStyle(fontSize: 18)),
-        ],
+      child: const Text('This Is The Custom Container With Text Widget!',
+      textAlign: TextAlign.center,
+      style: TextStyle(
+        fontSize: 20,
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
       ),
-    );
-  }
-}
-
-class ProfileScreen extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset('assets/images/biglogo.jpg', width: 500, height: 300),
-          SizedBox(height: 10),
-          Text('This is profile', style: TextStyle(fontSize: 18)),
-        ],
       ),
+      
     );
   }
 }
