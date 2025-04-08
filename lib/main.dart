@@ -1,58 +1,69 @@
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+main() {
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Tracker App',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(title: Text('Tracker App - Custom Container'),backgroundColor: Color.fromARGB(255, 242, 255, 2)),
-        backgroundColor: const Color.fromARGB(255, 0, 0, 0),
-        body: const Center(
-          child: CustomContainer(),
-        ),
-      ),
-    );
+    return MaterialApp(home: HomeScreen(), debugShowCheckedModeBanner: false);
   }
 }
 
-class CustomContainer extends StatelessWidget {
-  const CustomContainer({super.key});
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 250,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color:Colors.blue,
-        borderRadius: BorderRadius.circular(20),
-        boxShadow:[ BoxShadow(
-          color: Colors.black.withOpacity(0.3),
-          blurRadius: 10,
-          spreadRadius: 2,
-          offset: Offset(5,5),
-          
-        
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: const Color.fromARGB(255, 25, 196, 6),
+        elevation: 100,
+        title: Row(
+          children: [
+            Image.asset("assets/images/biglogo.jpg", width: 40, height: 40),
+            Text(
+              "  Bazar Sadaai App",
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
+        actions: [
+          IconButton(icon: Icon(Icons.search), onPressed: () {}),
+          IconButton(icon: Icon(Icons.menu), onPressed: () {}),
         ],
       ),
-      child: const Text('This Is The Custom Container With Text Widget!',
-      textAlign: TextAlign.center,
-      style: TextStyle(
-        fontSize: 20,
-        color: Colors.white,
-        fontWeight: FontWeight.bold,
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment:
+              CrossAxisAlignment.center, // ensures horizontal centering
+          children: [
+            Image.asset("assets/images/biglogo.jpg", width: 300, height: 300),
+            SizedBox(height: 16), // optional spacing
+            Text(
+              "Home Screen",
+              textAlign: TextAlign.center, // centers text content
+              style: TextStyle(
+                fontSize: 45,
+                color: Color.fromARGB(255, 5, 196, 21),
+              ),
+            ),
+            SizedBox(height: 8), // optional spacing
+            Text(
+              "Customize App Bar, Logo, Title, Action Button",
+              textAlign: TextAlign.center, // centers text content
+              style: TextStyle(
+                fontSize: 27,
+                color: Color.fromARGB(255, 55, 74, 57),
+              ),
+            ),
+          ],
+        ),
       ),
-      ),
-      
     );
   }
 }
