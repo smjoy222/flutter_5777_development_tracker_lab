@@ -7,83 +7,98 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
-  
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Tracker App - Task 14',
+      title: 'Date & Time Picker',
       theme: ThemeData.dark(),
-      home: SwipeListScreen(),
+      home: const DateTimePickerScreen(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class SwipeListScreen extends StatefulWidget {
+class DateTimePickerScreen extends StatefulWidget {
+  const DateTimePickerScreen({super.key});
   @override
-  _SwipeListScreenState createState() => _SwipeListScreenState();
+  DateTimePickerScreenState createState() => DateTimePickerScreenState();
 }
 
-class _SwipeListScreenState extends State<SwipeListScreen> {
-  List<String> items = List.generate(15, (index) => 'Item ${index + 1}');
+class DateTimePickerScreenState extends State<DateTimePickerScreen> {
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
+
+  Future<void> _pickDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate ?? DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2500),
+    );
+    if (picked != null && picked != selectedDate) {
+      setState(() {
+        selectedDate = picked;
+      });
+    }
+  }
+
+  Future<void> _pickTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime ?? TimeOfDay.now(),
+    );
+    if (picked != null && picked != selectedTime) {
+      setState(() {
+        selectedTime = picked;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-  
     return Scaffold(
       appBar: AppBar(
-        
-        title: Text('Tracker App - Swap to Edit/Delete',),
-        titleTextStyle: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        title: const Text('Pick Date & Time App'),
+        titleTextStyle: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
+        backgroundColor: Colors.blue,
         centerTitle: true,
-        backgroundColor: Color.fromARGB(255, 3, 215, 215),
       ),
-      body: ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          final item = items[index];
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () => _pickDate(context),
 
-          return Dismissible(
-            key: Key(item),
-            background: Container(
-              color: Colors.blue,
-              alignment: Alignment.centerLeft,
-              padding: EdgeInsets.symmetric(horizontal: 20),
-
-              child: Icon(Icons.edit, color: Colors.white, size: 30),
-            ),
-            secondaryBackground: Container(
-              color: Colors.red,
-              alignment: Alignment.centerRight,
-              padding: EdgeInsets.symmetric(horizontal: 30),
-              child: Icon(Icons.delete, color: Colors.white, size: 30),
-            ),
-            onDismissed: (direction) {
-              if (direction == DismissDirection.endToStart) {
-                setState(() {
-                  items.removeAt(index);
-                });
-
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text('$item deleted')));
-              } else if (direction == DismissDirection.startToEnd) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text('Edit $item')));
-              }
-            },
-            child: Card(
-              elevation: 2,
-              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              child: ListTile(
-                title: Text(item),
-                //leading: Icon(Icons.list),
+                child: const Text('Pick a Date'),
               ),
-            ),
-          );
-        },
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () => _pickTime(context),
+                child: const Text('Pick Time'),
+              ),
+              const SizedBox(height: 40),
+              Text(
+                selectedDate == null
+                    ? 'No Date Selected Yet'
+                    : 'Selected Date: ${selectedDate?.toLocal()}',
+                style: const TextStyle(fontSize: 18),
+              ),
+              Text(
+                selectedTime == null
+                    ? 'No Time Selected Yet'
+                    : 'Selected Time: ${selectedTime?.format(context)}',
+                style: const TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
